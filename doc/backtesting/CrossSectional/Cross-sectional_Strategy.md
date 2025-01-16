@@ -209,12 +209,12 @@ $$
 
 #### 成交量
 $$
-volue = \sum_{i=1}^5contract_i.volume
+volume = \sum_{i=1}^5contract_i.volume
 $$
 
 #### 持仓量
 $$
-open_interest = \sum_{i=1}^5contract_i.open\_interest
+open\_interest = \sum_{i=1}^5contract_i.open\_interest
 $$
 
 ### 可变参数
