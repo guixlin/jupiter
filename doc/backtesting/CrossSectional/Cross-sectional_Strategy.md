@@ -122,10 +122,11 @@ $$
 Index = \sum_{i = 1}^n \frac{Volume_i}{Volume_{total}}P_i
 $$
 
-    其中
-  $$
-  Volume_{total} = \sum_{i=1}^nVolume_i
-  $$
+    其中:
+
+$$
+Volume_{total} = \sum_{i=1}^nVolume_i
+$$
     
 
 - 持仓权重 
