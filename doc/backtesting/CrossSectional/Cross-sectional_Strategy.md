@@ -89,7 +89,9 @@
 
   $$
   MI = Vol \times W_v + OI \times W_{OI}
+  $$
 
+  $$
   W_v + W_{OI} = 1
   $$
   
@@ -116,7 +118,9 @@
 
 $$
 Index = \sum_{i = 1}^n \frac{Volume_i}{Volume_{total}}P_i
+$$
 
+$$
 Volume_{total} = \sum_{i=1}^nVolume_i
 $$
     
@@ -129,7 +133,9 @@ $$
 
 $$
 Index = \sum_{i=1}^n \frac{OI_i}{OI_{total}}P_i
+$$
 
+$$
 OI_{total}=\sum_{i=1}^nOI_i
 $$
     
