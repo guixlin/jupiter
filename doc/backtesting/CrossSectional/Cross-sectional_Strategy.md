@@ -117,9 +117,10 @@
   - 根据每个合约的成交量来分配权重，成交最大的合约权重更高
 
   - 公式：
-  $$
-  Index = \sum_{i = 1}^n \frac{Volume_i}{Volume_{total}}P_i
-  $$
+
+$$
+Index = \sum_{i = 1}^n \frac{Volume_i}{Volume_{total}}P_i
+$$
 
     其中
   $$
@@ -133,30 +134,30 @@
 
   - 公式：
 
-  $$
-  Index = \sum_{i=1}^n \frac{OI_i}{OI_{total}}P_i
-  $$
+$$
+Index = \sum_{i=1}^n \frac{OI_i}{OI_{total}}P_i
+$$
 
     其中：
 
-  $$
-  OI_{total}=\sum_{i=1}^nOI_i
-  $$
+$$
+OI_{total}=\sum_{i=1}^nOI_i
+$$
     
 
 - 成交持仓混合权重
 
   - 假设成交量与持仓量的权重值分别为：W<sub>vol</sub>和W<sub>OI</sub> 
 
-  $$
-  W_{vol} + W_{OI} = 1
-  $$
+$$
+W_{vol} + W_{OI} = 1
+$$
 
   - 总的计算公式如下
 
-  $$
-  Index = W_{vol} \times \sum_{i=1}^n\frac{V_i}{V_{total}}Pi + W_{OI} \times \sum_{i=1}^n\frac{OI_i}{OI_{total}}Pi
-  $$
+$$
+Index = W_{vol} \times \sum_{i=1}^n\frac{V_i}{V_{total}}Pi + W_{OI} \times \sum_{i=1}^n\frac{OI_i}{OI_{total}}Pi
+$$
     
 
 #### 合约滚动
