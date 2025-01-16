@@ -43,13 +43,23 @@
     - 持仓量(OI): 该BAR时间收盘持仓量
     - 可能包含的：开盘持仓量，持仓变化等
 
-回测系统先进行一个长期的测试，为了快速定位某些参数对策略的长期影响，通过长期的数据运算
+回测系统先进行一个长期的测试，为了快速定位某些参数对策略的长期影响，可以使用数量小的BAR数据。使用tick数据，各个品种的数据量很大，在进行长时间的运算的时候达不到快速的要求。
 
 ## 规则
 
 ### 数据对齐
 
-横截面策略涉及到多少合约同时进行运算。现交易所不能确保每个时刻的数据都是等时过来。在回测系统中，需要使用
+交易所提供的数据具有时间、频率、数据缺失或者错误等问题。针对此问题，
+- 时间戳格式统一，不同的交易所提供的数据有精度或者时间格式差异；将数据采用统一的时间格式标准化；
+- 数据格式差异，将不同的数据映射到标准的数据格式中；
+- 因网络延迟或者数据同步机制的问题，导致不同的数据到达的时间不一样；需要将数据依照交易所的真实时间来重排
+- 数据缺失值处理，根据上下文的值算出一个合理值进行填充
+- 错误或者异常数据值处理
+  - 删除异常值
+  - 修正明显错误数值
+  - 处理缺失时间段的数值
+
+在数据对齐后，回测系统或者交易系统确保策略**等时等量**得到标准的数据。
 
 ### 换月规则
 
@@ -154,7 +164,6 @@
 ```
 typedef struct bar
 {
-  uint64_t timestamp;     /* the timestamp of data snapshot. */
   uint32_t date;          /* date in int format, such as: 20250116 */
   double open;
   double high;
@@ -166,5 +175,42 @@ typedef struct bar
 ```
 
 ### 日线计算产品价格指数
-假设当前交易所交易的行情
+假设当前交易所交易的行情，某个交易产品有5个合约，如contract_1, contract_2... contract_5, 计算各个数据字段的标准指数。使用成交持仓混合权重方式进行计算。
 
+总成交量：
+$$
+volume_{total} = \sum_{i=1}^5contract_i.volume
+$$
+
+总持仓量：
+$$
+OI_{total} = \sum_{i=1}^5contract_i.open\_interest
+$$
+
+#### 开盘价
+$$
+open = W_{vol} \times \sum_{i=1}^5\frac{contract_i.volume}{volume_{total}} \times contract_i.open + W_{OI} \times \sum_{i=1}^5\frac{contract_i.open\_interest}{OI_{total}} \times contract_i.open
+$$
+
+#### 收盘价
+$$
+close = W_{vol} \times \sum_{i=1}^5\frac{contract_i.volume}{volume_{total}} \times contract_i.close + W_{OI} \times \sum_{i=1}^5\frac{contract_i.open\_interest}{OI_{total}} \times contract_i.close
+$$
+
+#### 最高价
+$$
+high = W_{vol} \times \sum_{i=1}^5\frac{contract_i.volume}{volume_{total}} \times contract_i.high + W_{OI} \times \sum_{i=1}^5\frac{contract_i.open\_interest}{OI_{total}} \times contract_i.high
+$$
+
+#### 最低价
+$$
+low = W_{vol} \times \sum_{i=1}^5\frac{contract_i.volume}{volume_{total}} \times contract_i.low + W_{OI} \times \sum_{i=1}^5\frac{contract_i.open\_interest}{OI_{total}} \times contract_i.low
+$$
+
+#### 成交量
+volue = \sum_{i=1}^5contract_i.volume
+
+#### 持仓量
+open_interest = \sum_{i=1}^5contract_i.open\_interest
+
+### 可变参数
