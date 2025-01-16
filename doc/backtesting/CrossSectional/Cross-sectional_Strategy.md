@@ -145,15 +145,13 @@ $$
   - 假设成交量与持仓量的权重值分别为：W<sub>vol</sub>和W<sub>OI</sub> 
 
 $$
-W_{vol} + W_{OI} = 1
-$$
-
-  - 总的计算公式如下
-
-$$
 Index = W_{vol} \times \sum_{i=1}^n\frac{V_i}{V_{total}}Pi + W_{OI} \times \sum_{i=1}^n\frac{OI_i}{OI_{total}}Pi
 $$
     
+$$
+W_{vol} + W_{OI} = 1
+$$
+
 
 #### 合约滚动
 
