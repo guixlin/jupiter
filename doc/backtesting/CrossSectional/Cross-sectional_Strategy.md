@@ -90,7 +90,9 @@
   $$
   MI = Vol \times W_v + OI \times W_{OI}
   $$
+
   其中：
+
   $$
   W_v + W_{OI} = 1
   $$
@@ -115,10 +117,13 @@
   - 根据每个合约的成交量来分配权重，成交最大的合约权重更高
 
   - 公式：
+
     $$
     指数值 = \sum_{i = 1}^n\frac{Vol_i}{Vol_{total}}P_i
     $$
+
     其中
+
     $$
     Vol_{total} = \sum_{i=1}^nVol_i
     $$
@@ -129,10 +134,13 @@
   - 根据每个合约的持仓量（未平仓合约数）来分配权重，持仓量大的合约权重更高
 
   - 公式：
+
     $$
     指数值 = \sum_{i=1}^n \frac{OI_i}{OI_{total}}P_i
     $$
+
     其中：
+
     $$
     OI_{total}=\sum_{i=1}^nVol_i
     $$
@@ -141,11 +149,13 @@
 - 成交持仓混合权重
 
   - 假设成交量与持仓量的权重值分别为：W<sub>vol</sub>和W<sub>OI</sub> 
+
     $$
     W_{vol} + W_{OI} = 1
     $$
 
   - 总的计算公式如下
+
     $$
     指数值 = W_{vol} \times \sum_{i=1}^n\frac{V_i}{V_{total}}Pi + W_{OI} \times \sum_{i=1}^n\frac{OI_i}{OI_{total}}Pi
     $$
