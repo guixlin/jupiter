@@ -224,7 +224,7 @@ $$
 - 强弱百分比 ratio
 横截面策略中，需要在分别两端选取等量的强弱合约做多与做空。在参数需要设置两端合约的选取数量进行取整。当两端算出来的值不一样的时候，取小的一个；且最小为1.
 
-假设交易的产品数量为：Total_Count
+  假设交易的产品数量为：Total_Count
 
 $$
 long\_count = ceil(Total\_Count \times ratio)      
@@ -235,7 +235,7 @@ short\_count = ceil(Total\_Count \times ratio)
 $$
 
 $$
-long\_short = short\count = max(min(long\_count, short\_count), 1)
+long\_count = short\_count = max(min(long\_count, short\_count), 1)
 $$
 
 - 涨跌参考日期距离 days
