@@ -243,4 +243,30 @@ $$
 
 
 ### 强弱指标计算公式
+强弱指标是用来衡量某一合约在一段时间内的涨跌幅度。在横截面策略中，我们需要计算每个合约在days天内的涨跌幅度，然后根据涨跌幅度进行排序，选取强势合约和弱势合约。
+
+#### 涨跌幅度计算
+$$
+change = \frac{close - close_{days\_ago}}{close_{days\_ago}}
+$$
+
+#### 强弱指标计算
+$$
+strength = \frac{change - min\_change}{max\_change - min\_change}
+$$
+
+$$
+weakness = \frac{change - max\_change}{min\_change - max\_change}
+$$
+
+### 强弱合约选取
+在横截面策略中，我们需要选取强势合约和弱势合约，然后进行做多和做空。在选取强弱合约的时候，我们需要根据强弱指标进行排序，选取前long_count个合约作为强势合约，选取后short_count个合约作为弱势合约。
+
+### 交易信号
+在选取了强弱合约后，我们需要根据强弱合约的价格进行做多和做空。在横截面策略中，我们需要计算强弱合约的价格差，然后根据价格差进行做多和做空。
+
+#### 价格差计算
+$$
+price\_diff = long\_contract\_price - short\_contract\_price
+$$
 
