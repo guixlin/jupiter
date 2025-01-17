@@ -222,18 +222,18 @@ $$
 
   横截面策略中，需要在分别两端选取等量的强弱合约做多与做空。在参数需要设置两端合约的选取数量进行取整。当两端算出来的值不一样的时候，取小的一个；且最小为1.
 
-  假设交易的产品数量为：Total_Count
+  假设备选可交易的产品数量为：count<sub>total</sub>
 
 $$
-long\_count = ceil(Total\_Count \times ratio)      
-$$
-
-$$
-short\_count = ceil(Total\_Count \times ratio)
+count_{long} = ceil(count_{total} \times ratio)  
 $$
 
 $$
-long\_count = short\_count = max(min(long\_count, short\_count), 1)
+count_{short} = ceil(count_{total} \times ratio)
+$$
+
+$$
+count_{long} = count_{short} = max(min(count_{long}, count_{short}), 1)
 $$
 
 - 涨跌参考日期距离 **days**
@@ -242,8 +242,18 @@ $$
 
 - 交易品种筛选阈值 **threshold**
 
-  每个品种有不同的成交量和持仓量，需要设置一个阈值来筛选出交易的品种。将成交量和持仓量的和作为阈值，当品种的成交量和持仓量的和大于阈值时，才进入备选品种。
+  每个品种有不同的产品成交量指数和产品持仓量指数，需要设置一个阈值来筛选出交易的品种。将成交量指数和持仓量指数的和作为阈值，当品种的成交量和持仓量的和大于阈值时，才进入备选品种。两者可以作一个加权。
 
+$$
+threshold = volume \times W_{volume} + open\_interest \times W_{OI}
+$$
+
+```
+for each contract in all_contracts:
+  volume_OI = contract.volume \times W_{volume} + contract.open\_interest \times W_{OI}
+  if (volue_OI >= threshold) 
+       add_in_selected_contract_pool(contract)
+```
 
 ### 强弱指标计算公式
 强弱指标是用来衡量某一合约在一段时间内的涨跌幅度。在横截面策略中，我们需要计算每个合约在days天内的涨跌幅度，然后根据涨跌幅度进行排序，选取强势合约和弱势合约。
@@ -270,6 +280,6 @@ $$
 
 #### 价格差计算
 $$
-price\_diff = long\_contract\_price - short\_contract\_price
+kkkprice\_diff = long\_contract\_price - short\_contract\_price
 $$
 
