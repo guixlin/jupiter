@@ -261,16 +261,16 @@ for each contract in all_contracts:
 
 #### 涨跌幅度计算
 $$
-change = \frac{close - close_{days\_ago}}{close_{days\_ago}}
+change = \frac{close - close_{days_ago}}{close_{days_ago}}
 $$
 
 #### 强弱指标计算
 $$
-strength = \frac{change - min\_change}{max\_change - min\_change}
+strength = \frac{change - min_change}{max_change - min_change}
 $$
 
 $$
-weakness = \frac{change - max\_change}{min\_change - max\_change}
+weakness = \frac{change - max_change}{min_change - max_change}
 $$
 
 ### 强弱合约选取
