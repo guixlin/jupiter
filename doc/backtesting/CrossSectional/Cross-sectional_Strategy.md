@@ -240,20 +240,21 @@ $$
 
   选取最近days前的合约的涨跌作为强弱的参数。
 
-- 交易品种筛选阈值 **threshold**
+- 交易品种筛选阈值 **threshold<sub>volume</sub>和threshold<sub>OI</sub>**
 
-  每个品种有不同的产品成交量指数和产品持仓量指数，需要设置一个阈值来筛选出交易的品种。将成交量指数和持仓量指数的和作为阈值，当品种的成交量和持仓量的和大于阈值时，才进入备选品种。两者可以作一个加权。
+  每个品种有不同的产品成交量指数和产品持仓量指数，需要设置相关的阈值参数来筛选出交易的品种。
 
 $$
-threshold = volume \times W_{volume} + open\_interest \times W_{OI}
+Index = \frac{volume}{threold_{volume}} \times W_{volume} + \frac{open\_interest}{threshold_{OI}} \times W_{OI}
 $$
 
 ```
 for each contract in all_contracts:
-  volume_OI = contract.volume \times W_{volume} + contract.open\_interest \times W_{OI}
-  if (volue_OI >= threshold) 
+  oi_v_index = contract.volume/threshold[volume] * W[vol] + contract.open_interest / threshold[OI] * W[OI]
+  if (oi_v_index >= 1) 
        add_in_selected_contract_pool(contract)
 ```
+- 每个主力合约的金额 capital
 
 ### 强弱指标计算公式
 强弱指标是用来衡量某一合约在一段时间内的涨跌幅度。在横截面策略中，我们需要计算每个合约在days天内的涨跌幅度，然后根据涨跌幅度进行排序，选取强势合约和弱势合约。
@@ -276,10 +277,10 @@ $$
 在横截面策略中，我们需要选取强势合约和弱势合约，然后进行做多和做空。在选取强弱合约的时候，我们需要根据强弱指标进行排序，选取前long_count个合约作为强势合约，选取后short_count个合约作为弱势合约。
 
 ### 交易信号
-在选取了强弱合约后，我们需要根据强弱合约的价格进行做多和做空。在横截面策略中，我们需要计算强弱合约的价格差，然后根据价格差进行做多和做空。
+策略根据涨跌幅度排列靠前的count<sub>long</sub>和count<sub>short</sub>个主力合约产生信号。策略按每个合约按同一金额计算出合约信号的手数。
 
-#### 价格差计算
 $$
-kkkprice\_diff = long\_contract\_price - short\_contract\_price
-$$
+volume_{signal} = ceil(\frac{capital}{contract.margine})
+$$ 
+
 
