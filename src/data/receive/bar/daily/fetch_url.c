@@ -24,15 +24,18 @@ write_data(void *ptr, size_t size, size_t nmemb, void *data_chunk)
 
 	if (chunk->size < total) {
 		fprintf(stderr, "data buffer is too small\n");
+
+		chunk->size = 0;
 		return 0;
 	}
 
 	memcpy(chunk->data, ptr, total);
+	chunk->size = total;
 
 	return total;
 }
 
-int
+size_t
 fetch_url(const char *url, uint8_t *data, size_t size)
 {
 	CURL *curl;
@@ -52,12 +55,13 @@ fetch_url(const char *url, uint8_t *data, size_t size)
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &chunk);
 		curl_easy_setopt(curl, CURLOPT_USERAGENT, "fetch_daily_bar/1.0");
 		res = curl_easy_perform(curl);
+
 		if (res != CURLE_OK) {
 			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-			return 1;
+			return 0;
 		}
-		curl_easy_cleanup(curl);
 	}
 	
-	return 0;
+	return chunk.size;
 }
+

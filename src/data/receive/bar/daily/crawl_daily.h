@@ -12,7 +12,7 @@
 int initialize(void);
 void destroy(void);
 
-int fetch_url(const *url, uint8_t *data, size_t len);
+size_t fetch_url(const *url, uint8_t *data, size_t len);
 
 int save(uint8_t *data, size_t size, const char *dst_fn);
 

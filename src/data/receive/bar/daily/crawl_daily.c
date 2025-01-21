@@ -14,8 +14,9 @@
 int
 main(int argc, char *argv[])
 {
-	if (argc != 2) {
-		fprintf(stderr, "Usage: %s <URL>\n", argv[0]);
+	size_t data_sz = 0;
+	if (argc != 3) {
+		fprintf(stderr, "Usage: %s <URL> <out_file>\n", argv[0]);
 		return 1;
 	}
 
@@ -28,12 +29,21 @@ main(int argc, char *argv[])
 
 	if (initialize() != 0) {
 		fprintf(stderr, "initialize() failed\n");
-		return 1;
+		return 2;
 	}
 
-	if (fetch_url(argv[1], data, 1024 * 1024) != 0) {
+	if ((data_sz = fetch_url(argv[1], data, 1024 * 1024)) == 0) {
 		fprintf(stderr, "fetch_url() failed\n");
-		return 1;
+		destroy();
+
+		return 3;
+	}
+
+	if (save(data, data_sz, argv[2]) != 0) {
+		fprintf(stderr, "save failed\n");
+		destroy();
+
+		return 4;
 	}
 
 	destroy();
