@@ -16,5 +16,7 @@ int
 initialize(void)
 {
 	curl_global_init(CURL_GLOBAL_ALL);
+
+	return 0;
 }
 

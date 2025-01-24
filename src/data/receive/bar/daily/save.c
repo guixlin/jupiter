@@ -5,6 +5,7 @@
  *
  * Copyright(C) by Shenzhen Jupiter Fund Management Co. Ltd. 2025-
  */
+#include "crawl_daily.h"
 
 int
 save(uint8_t *s_data, size_t s_len, const char *dst_fn)
@@ -23,7 +24,7 @@ save(uint8_t *s_data, size_t s_len, const char *dst_fn)
 	}
 
 	while (out_len < s_len) {
-		len = fwrite(s_data + out_len, s_len - out_len, dst_fp);
+		len = fwrite(s_data + out_len, s_len - out_len, 1, dst_fp);
 		if (len < 0) {
 			break;
 		}

@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
+#include "crawl_daily.h"
 
 int
 main(int argc, char *argv[])

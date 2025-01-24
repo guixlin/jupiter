@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
+#include <assert.h>
 
 struct memory_chunk {
 	uint8_t *data;
