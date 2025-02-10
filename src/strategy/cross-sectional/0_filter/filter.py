@@ -11,11 +11,11 @@
 #  4. 生成csv文件名
 # 
 # 输入: 
-#  1. 生成filtered_symbol.csv文件
+#  1. 生成指定文件名的CSV文件
 #
 # 使用方法：
 # 
-#      filter <volume_threshold> <OI_threshold>
+#      filter <input_file_name> <volume_threshold> <OI_threshold> <output_file_name>
 #
 # Copyright(C) by Shenzhen Jupiter Fund 2025-
 #
