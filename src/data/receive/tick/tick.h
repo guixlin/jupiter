@@ -14,6 +14,18 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+enum md_type {
+	MD_T_CTP = 0,
+	MD_T_SHFE,
+	MD_T_CFFEX,
+	MD_T_CZCE,
+	MD_T_DCE,
+	MD_T_INE,
+	MD_T_SSE,
+	MD_T_SZSE,
+	MD_T_MAX
+};
+
 typedef struct pv_data
 {
 	double price;
@@ -23,6 +35,9 @@ typedef struct pv_data
 typedef struct tick_data
 {
 	uint64_t timestamp;	/* timestamp of the tick data */
+
+	char *symbol;		/* symbol of the tick data */
+	char *exchange;		/* exchange of the tick data */
 
 	void *basic_data;	/* basic data of the tick data, such as open price, etc. */
 	pv_data_t last;		/* last price and volume */
@@ -38,5 +53,11 @@ typedef struct tick_data
 		} *ba_pair;	/* points to the first bid and ask price and volume pair */
 	} all_pvs;
 } tick_data_t;
+
+/*
+ * read_tick - read tick data from the buffer. 
+ */
+tick_data_t *read_tick(int md_type, uint8_t *data, size_t size);
+tick_data_t *read_next(tick_data_t *tick);
 
 #endif		/* __TICK_H__ */
