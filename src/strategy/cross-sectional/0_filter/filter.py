@@ -36,7 +36,7 @@ def filter_contracts(file_name, volume_threshold, oi_threshold):
         open_interest = row['open_interest']  # 获取 open_interest 列的数据
 
         if volume > volume_threshold and open_interest > oi_threshold :
-            selected_records.append(row.to_numpy())  # 将符合条件的记录添加到 selected_records
+            selected_array.append(row.to_numpy())  # 将符合条件的记录添加到 selected_records
 
     # 将 selected_records 转换为 numpy 数组
     selected_array = np.array(selected_records)
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # 调用函数进行比较
-    filter_contracts(args.in_fn, args.volume_threshold, args.oi_threshold)
+    selected_array = filter_contracts(args.in_fn, args.volume_threshold, args.oi_threshold)
 
     # 保存符合条件的记录到 CSV 文件
     save_selected_contracts(selected_array, args.out_fn)
