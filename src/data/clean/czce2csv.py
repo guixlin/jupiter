@@ -79,6 +79,7 @@ df.insert(0, 'product', df.pop('product'))
 # 去掉dataframe中所有的空格
 # 去掉所有的空格
 df = df.map(lambda x: x.replace(' ', '') if isinstance(x, str) else x)
+df = df.map(lambda x: x.replace('"', '') if isinstance(x, str) else x)
 
 df.to_csv(args.output_file, index=False)
 
