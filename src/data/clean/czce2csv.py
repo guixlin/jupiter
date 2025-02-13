@@ -34,7 +34,8 @@ def is_contract(text):
 
 def format_contract(contract, day):
     # 提取年份的第一个数字（例如 '2025' 中的 '2'）
-    year_first_digit = day.split('-')[0][0]
+    year_first_digit = day[2]
+    current_mon = day[2:6]
 
     # 使用正则表达式找到字符串中的第一个数字的索引
     match = re.search(r'\d', contract)
@@ -42,6 +43,9 @@ def format_contract(contract, day):
     if match:
         # 获取第一个数字的位置
         index = match.start()
+
+        if int(current_mon) > int(year_first_digit + contract[index:]):
+            year_first_digit = chr(ord(year_first_digit) + 1)
 
         # 在第一个数字前插入年份的第一个数字
         formal_contract = contract[:index] + year_first_digit + contract[index:]
@@ -59,13 +63,16 @@ args = parser.parse_args()
 # 加载CSV文件
 df = pd.read_csv(args.file_name, sep='|', skiprows=2)
 
-df.columns=['day', 'contract', 'pre_settlement', 'open', 'high', 'low', 'close', 'settlement', 'change1', 'change2', 'volume', 'open_interest', 'delta', 'amount', 'delivery']
+df.columns=['day', 'contract', 'pre_settlement', 'open', 'high', 'low', 'close', 'settlement', 'change1', 'change2', 'volume', 'open_interest', 'delta', 'amount', 'delivery', '']
 
 # 删除最后一列
 df = df.iloc[:, :-1]
 
 # 把合约放在第一列
 df.insert(0, 'contract', df.pop('contract'))
+
+# 格式化日期列
+df['day'] = df['day'].apply(lambda x: x.replace('-', ''))
 
 # 格式化合约
 df['contract'] = df.apply(lambda row: format_contract(row['contract'], row['day']), axis=1)
