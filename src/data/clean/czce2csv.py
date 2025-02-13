@@ -61,12 +61,18 @@ parser.add_argument("output_file", help="output file name")
 args = parser.parse_args()
 
 # 加载CSV文件
-df = pd.read_csv(args.file_name, sep='|', skiprows=2)
+df = pd.read_csv(args.file_name, sep='|', skiprows=2, low_memory=False)
 
 df.columns=['day', 'contract', 'pre_settlement', 'open', 'high', 'low', 'close', 'settlement', 'change1', 'change2', 'volume', 'open_interest', 'delta', 'amount', 'delivery', '']
 
 # 删除最后一列
 df = df.iloc[:, :-1]
+
+# 使用 map() 处理所有列，去掉千位分隔符
+df = df.map(lambda x: x.replace(',', '') if isinstance(x, str) else x)
+
+# 去掉dataframe中所有的空格
+df = df.map(lambda x: x.replace(' ', '') if isinstance(x, str) else x)
 
 # 把合约放在第一列
 df.insert(0, 'contract', df.pop('contract'))
@@ -83,10 +89,8 @@ df['product'] = df.apply(lambda row: get_product(row['contract']), axis=1)
 # 将新列插入到最前面
 df.insert(0, 'product', df.pop('product'))
 
-# 去掉dataframe中所有的空格
-# 去掉所有的空格
-df = df.map(lambda x: x.replace(' ', '') if isinstance(x, str) else x)
-df = df.map(lambda x: x.replace('"', '') if isinstance(x, str) else x)
+# 计算成交额数值，将单位“万元”换成“元"
+# df['amount'] = df['amount'] * 10000
 
 df.to_csv(args.output_file, index=False)
 
