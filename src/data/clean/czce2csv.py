@@ -33,7 +33,7 @@ def is_contract(text):
     return text and text[0].isalpha()
 
 def format_contract(contract, day):
-    # 提取年份的第一个数字（例如 '2025' 中的 '2'）
+    # 提取年份的第三个数字（例如 '2025' 中的 '2'）
     year_first_digit = day[2]
     current_mon = day[2:6]
 
