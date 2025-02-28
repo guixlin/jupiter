@@ -15,11 +15,7 @@ A comprehensive and modular crawler for collecting daily market data from crypto
 
 ## Installation
 
-1. Clone this repository:
-```bash
-git clone https://github.com/yourusername/exchange-crawler.git
-cd exchange-crawler
-```
+1. download the source code.
 
 2. Create a virtual environment:
 ```bash
