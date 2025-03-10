@@ -30,7 +30,7 @@ for idx, signal in signals_df.iterrows():
         continue
 
     open_contract = open_row['contract'].iloc[0]
-    open_settlement = open_row['settlement'].iloc[0]
+    open_price = open_row['close'].iloc[0]
     open_quantity = int(amount // open_settlement)
 
     # 找到平仓日
@@ -42,7 +42,7 @@ for idx, signal in signals_df.iterrows():
         'product': product,
         'position': position,
         'open_contract': open_contract,
-        'open_settlement': open_settlement,
+        'open_price': open_price,
         'quantity': open_quantity,
         'close_date': close_date
     })
@@ -61,7 +61,7 @@ for day in trading_days:
 
         # 每日盈亏
         direction = 1 if pos['position'] == 'long' else -1
-        daily_pnl = direction * (day_settlement - pos['open_settlement']) * pos['quantity']
+        daily_pnl = direction * (day_settlement - pos['open_price']) * pos['quantity']
 
         daily_pnl_records.append({
             'date': day,
